@@ -18,6 +18,7 @@ builds:
       - amd64
       - arm
       - arm64
+      - loong64
     goarm:
       - "6"
       - "7"
@@ -26,6 +27,10 @@ builds:
         goarch: arm64
       - goos: windows
         goarch: arm
+      - goos: windows
+        goarch: loong64
+      - goos: darwin
+        goarch: loong64
 changelog:
   filters:
     exclude:
@@ -33,30 +38,30 @@ changelog:
       - '^ci:'
 release:
   replace_existing_artifacts: true
-dockers:
-  - image_templates:
-      - "itzg/restify:latest"
-      - "itzg/restify:{{.Tag}}"
-    goos: linux
-    goarch: amd64
-    use: buildx
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.title={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
+# dockers:
+#   - image_templates:
+#       - "itzg/restify:latest"
+#       - "itzg/restify:{{.Tag}}"
+#     goos: linux
+#     goarch: amd64
+#     use: buildx
+#     build_flag_templates:
+#       - "--pull"
+#       - "--label=org.opencontainers.image.created={{.Date}}"
+#       - "--label=org.opencontainers.image.title={{.ProjectName}}"
+#       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+#       - "--label=org.opencontainers.image.version={{.Version}}"
 # alpine base image relies on https://github.com/docker-library/official-images#architectures-other-than-amd64
 #  - image_templates:
 #      - "itzg/restify:arm64"
 #      - "itzg/restify:{{.Tag}}-arm64"
 #    goos: linux
 #    goarch: arm64
-scoops:
-  - repository:
-      owner: itzg
-      name: scoop-bucket
-      token: "{{ .Env.SCOOP_TAP_GITHUB_TOKEN }}"
-    directory: bucket
-    license: Apache2
-    description: Enables REST-like access to HTML pages by scraping and parsing them into JSON
+# scoops:
+#   - repository:
+#       owner: itzg
+#       name: scoop-bucket
+    #   token: "{{ .Env.SCOOP_TAP_GITHUB_TOKEN }}"
+    # directory: bucket
+    # license: Apache2
+    # description: Enables REST-like access to HTML pages by scraping and parsing them into JSON
